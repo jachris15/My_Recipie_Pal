@@ -1,8 +1,8 @@
-import TargetScrape as target 
+import GEWebScrape as ge 
 
-print(target.taco_dict)
-print(target.tuna_dict)
-print(target.burger_dict)
-print(target.pancake_dict)
-print(target.omelette_dict)
-print(target.spaghetti_dict)
+print("burger dictionary: ", ge.burger_dict)
+print("taco dictionary: ", ge.taco_dict)
+print("tuna dictionary: ", ge.tuna_dict)
+print("omelette dictionary: ", ge.omelette_dict)
+print("pancake dictionary: ", ge.pancake_dict)
+print("spaghetti dictionary: ", ge.spaghetti_dict)
