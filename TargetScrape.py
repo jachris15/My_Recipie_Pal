@@ -85,9 +85,9 @@ def getPrices(recipe):
         
     return set_of_item_prices
         
-taco_dict = dict(getPrices("taco"))
-tuna_dict = dict(getPrices("tuna"))
-burger_dict = dict(getPrices("burger"))
-pancake_dict = dict(getPrices("pancake"))
-omelette_dict = dict(getPrices("omelette"))
-spaghetti_dict = dict(getPrices("spaghetti"))        
+#taco_dict = dict(getPrices("taco"))
+#tuna_dict = dict(getPrices("tuna"))
+#burger_dict = dict(getPrices("burger"))
+#pancake_dict = dict(getPrices("pancake"))
+#omelette_dict = dict(getPrices("omelette"))
+#spaghetti_dict = dict(getPrices("spaghetti"))        
