@@ -1,3 +1,4 @@
+
 import sqlite3
 import TargetScrape as target 
 
@@ -58,3 +59,13 @@ for key,value in target.spaghetti_dict.items():
 
 conn.commit()
 conn.close()
+=======
+import GEWebScrape as ge 
+
+print("burger dictionary: ", ge.burger_dict)
+print("taco dictionary: ", ge.taco_dict)
+print("tuna dictionary: ", ge.tuna_dict)
+print("omelette dictionary: ", ge.omelette_dict)
+print("pancake dictionary: ", ge.pancake_dict)
+print("spaghetti dictionary: ", ge.spaghetti_dict)
+>>>>>>> c497b03782bcb2a20fb74ecec5a92affa063b225
