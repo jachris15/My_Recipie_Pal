@@ -7,7 +7,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from selenium.webdriver import Edge
 from selenium.webdriver import Chrome
-
 from selenium.webdriver.common.by import By
 
 

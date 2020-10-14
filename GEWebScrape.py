@@ -3,6 +3,9 @@ import sys
 import numpy as np 
 from urllib.request import urlopen
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver import Chrome
+
 from selenium.webdriver import Edge
 from selenium.webdriver.common.by import By
 
@@ -48,7 +51,8 @@ omeletteURLS = ("https://shop.gianteagle.com/waterworks/search/product/000000000
 
 
 def getPrices(recipe):
-    driver = webdriver.Edge('C:/msedgedriver.exe')
+    #driver = webdriver.Edge('C:/msedgedriver.exe')
+    driver = webdriver.Chrome(ChromeDriverManager().install())
 
     if recipe == "taco":
         recipeURLS = tacoURLs
@@ -98,9 +102,10 @@ def getPrices(recipe):
     return(set_of_item_prices)
 
 #store the sets as dictionaries for the corresponding food item
+
 taco_dict = dict(getPrices("taco"))
-tuna_dict = dict(getPrices("tuna"))
-burger_dict = dict(getPrices("burger"))
-pancake_dict = dict(getPrices("pancake"))
-omelette_dict = dict(getPrices("omelette"))
-spaghetti_dict = dict(getPrices("spaghetti"))
+#tuna_dict = dict(getPrices("tuna"))
+#burger_dict = dict(getPrices("burger"))
+#pancake_dict = dict(getPrices("pancake"))
+#omelette_dict = dict(getPrices("omelette"))
+#spaghetti_dict = dict(getPrices("spaghetti"))
