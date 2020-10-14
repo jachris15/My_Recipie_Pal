@@ -61,12 +61,12 @@ for key,value in target.spaghetti_dict.items():
 
 
 # Inserts GE data into DB
-
+'''
 for key,value in ge.taco_dict.items():
     name = key
     price = value
     c.execute("INSERT INTO taco VALUES (?, ?, ?)", (name, price, 'Giant Eagle'))
-'''
+
 for key,value in ge.tuna_dict.items():
     name = key
     price = value
@@ -86,12 +86,12 @@ for key,value in ge.omelette_dict.items():
     name = key
     price = value
     c.execute("INSERT INTO omelette VALUES (?, ?, ?)", (name, price, 'Giant Eagle'))
-
+'''
 for key,value in ge.spaghetti_dict.items():
     name = key
     price = value
     c.execute("INSERT INTO spaghetti VALUES (?, ?, ?)", (name, price, 'Giant Eagle'))
-'''
+
 
 
 # Inserts Wal-Mart data into DB

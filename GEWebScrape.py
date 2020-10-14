@@ -5,8 +5,7 @@ from urllib.request import urlopen
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver import Chrome
-
-from selenium.webdriver import Edge
+#from selenium.webdriver import Edge
 from selenium.webdriver.common.by import By
 
 #group the urls for the recipes on Giant Eagle
@@ -51,8 +50,13 @@ omeletteURLS = ("https://shop.gianteagle.com/waterworks/search/product/000000000
 
 
 def getPrices(recipe):
-    #driver = webdriver.Edge('C:/msedgedriver.exe')
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+    '''
+    options = webdriver.ChromeOptions()
+    options.add_argument("--start-maximized")
+    self.driver = webdriver.Chrome('C:/chromedriver.exe')
+    driver = self.driver
+    '''
+    driver = webdriver.Chrome('C:/chromedriver.exe')
 
     if recipe == "taco":
         recipeURLS = tacoURLs
@@ -103,9 +107,10 @@ def getPrices(recipe):
 
 #store the sets as dictionaries for the corresponding food item
 
-taco_dict = dict(getPrices("taco"))
+#taco_dict = dict(getPrices("taco"))
 #tuna_dict = dict(getPrices("tuna"))
 #burger_dict = dict(getPrices("burger"))
 #pancake_dict = dict(getPrices("pancake"))
 #omelette_dict = dict(getPrices("omelette"))
-#spaghetti_dict = dict(getPrices("spaghetti"))
+spaghetti_dict = dict(getPrices("spaghetti"))
+#print(tuna_dict)
