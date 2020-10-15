@@ -1,63 +1,110 @@
 import sqlite3
-
+import pandas as pd
 conn = sqlite3.connect('stores.db')
 c = conn.cursor()
 
-target = ('Target',)
-walmart = ('Wal-Mart',)
 ge = ('Giant Eagle',)
+stores = ("Wal-Mart","Target","Giant Eagle")
 
-for row in c.execute('SELECT * FROM taco WHERE Store=?', target):
-    print(row)
-for row in c.execute('SELECT * FROM taco WHERE Store=?', ge):
-    print(row)
-for row in c.execute('SELECT * FROM taco WHERE Store=?', walmart):
-    print(row)
+def get_taco():
     
-print('\n')
+    for store in stores:
+        prices = {}
+        listPrices = []
+        for row in c.execute('SELECT Product_Price FROM taco WHERE Store=?', (store,)):
+    
+            listPrices.append(float(row[0].split('$')[1]))        
+        
+        total = sum(listPrices)
+        prices[store] = total
+        #for key, value in prices.items():
+        #    print(key, ":", value)
+    return prices
+    
 
-for row in c.execute('SELECT * FROM tuna WHERE Store=?', target):
-    print(row)
-for row in c.execute('SELECT * FROM tuna WHERE Store=?', ge):
-    print(row)
-for row in c.execute('SELECT * FROM tuna WHERE Store=?', walmart):
-    print(row)
-    
-print('\n')
-    
-for row in c.execute('SELECT * FROM burger WHERE Store=?', target):
-    print(row)
-for row in c.execute('SELECT * FROM burger WHERE Store=?', ge):
-    print(row)
-for row in c.execute('SELECT * FROM burger WHERE Store=?', walmart):
-    print(row)
-    
-print('\n')
 
-for row in c.execute('SELECT * FROM pancake WHERE Store=?', target):
-    print(row)
-for row in c.execute('SELECT * FROM pancake WHERE Store=?', ge):
-    print(row)
-for row in c.execute('SELECT * FROM pancake WHERE Store=?', walmart):
-    print(row)
+def get_tuna():
     
-print('\n')
+    for store in stores:
+        prices = {}
+        listPrices = []
+        for row in c.execute('SELECT Product_Price FROM tuna WHERE Store=?', (store,)):
+    
+            listPrices.append(float(row[0].split('$')[1]))        
+        
+        total = sum(listPrices)
+        prices[store] = total
+        #for key, value in prices.items():
+        #    print(key, ":", '$', value)
+    return prices
+    
 
-for row in c.execute('SELECT * FROM omelette WHERE Store=?', target):
-    print(row)
-for row in c.execute('SELECT * FROM omelette WHERE Store=?', ge):
-    print(row)
-for row in c.execute('SELECT * FROM omelette WHERE Store=?', walmart):
-    print(row)
+def get_burger():
     
-print('\n')
+    for store in stores:
+        prices = {}
+        listPrices = []
+        for row in c.execute('SELECT Product_Price FROM burger WHERE Store=?', (store,)):
+    
+            listPrices.append(float(row[0].split('$')[1]))        
+        
+        total = sum(listPrices)
+        prices[store] = total
+        #for key, value in prices.items():
+        #    print(key, ":", '$', value)
+    return prices
+    
 
-for row in c.execute('SELECT * FROM spaghetti WHERE Store=?', target):
-    print(row)
-for row in c.execute('SELECT * FROM spaghetti WHERE Store=?', ge):
-    print(row)
-for row in c.execute('SELECT * FROM spaghetti WHERE Store=?', walmart):
-    print(row)
+def get_pancake():
     
-print('\n')
+    for store in stores:
+        prices = {}
+        listPrices = []
+        for row in c.execute('SELECT Product_Price FROM pancake WHERE Store=?', (store,)):
+    
+            listPrices.append(float(row[0].split('$')[1]))        
+        
+        total = sum(listPrices)
+        prices[store] = total
+        #for key, value in prices.items():
+        #   print(key, ":", '$', value)
+    return prices
+    
+
+#for row in c.execute('SELECT Product_Price FROM omelette WHERE Store=?', ge):
+#    print(row)
+
+def get_omelette():
+    
+    for store in stores:
+        prices = {}
+        listPrices = []
+        for row in c.execute('SELECT Product_Price FROM omelette WHERE Store=?', (store,)):
+            
+            listPrices.append(float(row[0].split('$')[1]))        
+        
+        total = sum(listPrices)
+        prices[store] = total
+        for key, value in prices.items():
+            print(key, ":", '$', value)
+    return prices
+
+
+def get_spaghetti():
+    
+    for store in stores:
+        prices = {}
+        listPrices = []
+        for row in c.execute('SELECT Product_Price FROM spaghetti WHERE Store=?', (store,)):
+    
+            listPrices.append(float(row[0].split('$')[1]))        
+        
+        total = sum(listPrices)
+        prices[store] = total
+        for key, value in prices.items():
+            print(key, ":", '$', value)
+    return prices
+    
+
+
 
