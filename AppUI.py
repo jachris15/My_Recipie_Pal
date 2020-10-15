@@ -104,36 +104,54 @@ def mealRecipes(mealType):
     
     return recipeSelection
 
-def getPrices (meal):
+def getPrices (meal, ingredientList):
     
     conn = sqlite3.connect('stores.db')
     c = conn.cursor()
     
+    dictPrices = {}
+    
     for store in stores:
-        prices = {}
+        
         listPrices = []
         for row in c.execute('SELECT Product_Price FROM ' + meal + ' WHERE Store=?', (store,)):
             
-            if (len(row[0])) == 3:
-                
-                listPrices.append(float("0." + row[0][:2]))
+            if (len(row[0])) == 3: listPrices.append(float("0." + row[0][:2]))
             
-            else: 
-                
-                listPrices.append(float(row[0].split('$')[1]))        
+            else: listPrices.append(float(row[0].split('$')[1]))        
         
         total = sum(listPrices)
-        prices[store] = total
-        for key, value in prices.items():
-            print("{:5s}: ${:.2f}".format(key, value))
-    #return prices
-
+        
+        if len(str(total).split(".")[1]) > 2: dictPrices[store] = "${:.2f}".format(total)
+        else: dictPrices[store] = "$" + str(total)
+    
+    print("\n Ingredients list:\n")
+    for ingredient in ingredientList:
+        print("\t- " + ingredient)
+    print("\n")
+    
+    dataframePrices = pd.DataFrame(dictPrices, index = ["Price For Meal"])
+    print(dataframePrices)
+        
+def userContinue():
+    
+    while True:
+        userContinue = str(input("\nDo you want to get prices for another recipe? (Y/N): "))        
+        
+        if userContinue.upper().strip()[0] == "Y":
+            return True
+        
+        if userContinue.upper().strip()[0] == "N":
+            return False
+        else:
+            print("\nSorry, your input of " + '\"' + userContinue + '\"' " was an invalid input. Please answer yes or no.")
+            
 stores = ("Wal-Mart","Target","Giant Eagle")
 omeletteRecipe = ("Eggs", "Tomatoes", "Onions", "Mushrooms", "Cheese")
 pancakeRecipe = ("Pancake Mix", "Syrup", "Eggs")
 tunaRecipe = ("Bread", "Mayonnaise", "Tuna", "Pickles")
-burgerRecipe = ("Ground Beef", "Hamberger Buns", "Mayonnaise", "lettuce", "Onions", "Pickles", "French Fries")
-spaghettiRecipe = ("Spaghetti", "Sauce", "Ground Beef", "Parmesan")
+burgerRecipe = ("Ground Beef", "Hamberger Buns", "Mayonnaise", "Lettuce", "Onions", "Pickles", "French Fries")
+spaghettiRecipe = ("Spaghetti Noodles", "Spaghetti Sauce", "Ground Beef", "Parmesan Cheese")
 tacoRecipe = ("Lettuce", "Cheese", "Ground Beef", "Tomatoes", "Taco Shells", "Sour Cream")
 
 mealTypes = {1:"Breakfast", 2:"Lunch", 3:"Dinner", 4:"Quit"}
@@ -149,25 +167,31 @@ while True:
         selectionResult = mealRecipes("breakfast")
         if selectionResult == 3: continue
         else: 
-            if selectionResult == 1: recipePrice = getPrices("pancake")
-            if selectionResult == 2: recipePrice = getPrices("omelette")
+            if selectionResult == 1: recipePrice = getPrices("pancake", pancakeRecipe)
+            if selectionResult == 2: recipePrice = getPrices("omelette", omeletteRecipe)
             
     if mealSelection == 2: 
         selectionResult = mealRecipes("lunch")
         if selectionResult == 3: continue
         else: 
-            if selectionResult == 1: recipePrice = getPrices("burger")
-            if selectionResult == 2: recipePrice = getPrices("tuna")
+            if selectionResult == 1: recipePrice = getPrices("burger", burgerRecipe)
+            if selectionResult == 2: recipePrice = getPrices("tuna", tunaRecipe)
             
     if mealSelection == 3: 
         selectionResult = mealRecipes("dinner")
         if selectionResult == 3: continue
         else: 
-            if selectionResult == 1: recipePrice = getPrices("taco")
-            if selectionResult == 2: recipePrice = getPrices("spaghetti")
+            if selectionResult == 1: recipePrice = getPrices("taco", tacoRecipe)
+            if selectionResult == 2: recipePrice = getPrices("spaghetti", spaghettiRecipe)
     
     if mealSelection == 4: 
         print("\nThank you for using My Recipe Pal! Goodbye.")
         sleep(4)
         break
-    stop = input("^")
+    
+    answer = userContinue()
+    if answer: continue
+    else: 
+        print("\nThank you for using My Recipe Pal! Goodbye.")
+        sleep(4)
+        break
