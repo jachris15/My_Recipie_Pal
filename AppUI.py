@@ -138,10 +138,10 @@ def userContinue():
     while True:
         userContinue = str(input("\nDo you want to get prices for another recipe? (Y/N): "))        
         
-        if userContinue.upper().strip()[0] == "Y":
+        if userContinue.upper().strip() == "Y" or userContinue.upper().strip() == "YES":
             return True
         
-        if userContinue.upper().strip()[0] == "N":
+        if userContinue.upper().strip() == "N" or userContinue.upper().strip() == "NO":
             return False
         else:
             print("\nSorry, your input of " + '\"' + userContinue + '\"' " was an invalid input. Please answer yes or no.")
