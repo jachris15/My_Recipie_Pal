@@ -8,6 +8,22 @@ c = conn.cursor()
 ge = ('Giant Eagle',)
 stores = ("Wal-Mart","Target","Giant Eagle")
 
+def getPrices (meal):
+    
+    for store in stores:
+        prices = {}
+        listPrices = []
+        for row in c.execute('SELECT Product_Price FROM ' + meal + ' WHERE Store=?', (store,)):
+    
+            listPrices.append(float(row[0].split('$')[1]))        
+        
+        total = sum(listPrices)
+        prices[store] = total
+        #for key, value in prices.items():
+        #    print(key, ":", value)
+    return prices
+    
+
 def get_taco():
     
     for store in stores:
@@ -57,7 +73,7 @@ def get_burger():
     return prices
     
 
-def get_pancake():
+def get_pancakes():
     
     for store in stores:
         prices = {}
@@ -107,6 +123,7 @@ def get_spaghetti():
             print(key, ":", '$', value)
     return prices
     
-
+result = get_pancakes()
+print(result)
 
 

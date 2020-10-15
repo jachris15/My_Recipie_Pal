@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 #import db_tables as dbtables
 import re
+import sqlite3
 
 
 def clearScreen(): 
@@ -103,6 +104,31 @@ def mealRecipes(mealType):
     
     return recipeSelection
 
+def getPrices (meal):
+    
+    conn = sqlite3.connect('stores.db')
+    c = conn.cursor()
+    
+    for store in stores:
+        prices = {}
+        listPrices = []
+        for row in c.execute('SELECT Product_Price FROM ' + meal + ' WHERE Store=?', (store,)):
+            
+            if (len(row[0])) == 3:
+                
+                listPrices.append(float("0." + row[0][:2]))
+            
+            else: 
+                
+                listPrices.append(float(row[0].split('$')[1]))        
+        
+        total = sum(listPrices)
+        prices[store] = total
+        for key, value in prices.items():
+            print("{:5s}: ${:.2f}".format(key, value))
+    #return prices
+
+stores = ("Wal-Mart","Target","Giant Eagle")
 omeletteRecipe = ("Eggs", "Tomatoes", "Onions", "Mushrooms", "Cheese")
 pancakeRecipe = ("Pancake Mix", "Syrup", "Eggs")
 tunaRecipe = ("Bread", "Mayonnaise", "Tuna", "Pickles")
@@ -123,26 +149,24 @@ while True:
         selectionResult = mealRecipes("breakfast")
         if selectionResult == 3: continue
         else: 
-            if selectionResult == 1: recipePrice = dbtables.get_Pancakes()
-            if selectionResult == 2: recipePrice = dbtables.get_Omelette()
+            if selectionResult == 1: recipePrice = getPrices("pancake")
+            if selectionResult == 2: recipePrice = getPrices("omelette")
             
     if mealSelection == 2: 
         selectionResult = mealRecipes("lunch")
         if selectionResult == 3: continue
         else: 
-            if selectionResult == 1: recipePrice = dbtables.get_Burger()
-            if selectionResult == 2: recipePrice = dbtables.get_Tuna()
+            if selectionResult == 1: recipePrice = getPrices("burger")
+            if selectionResult == 2: recipePrice = getPrices("tuna")
             
     if mealSelection == 3: 
         selectionResult = mealRecipes("dinner")
         if selectionResult == 3: continue
         else: 
-            if selectionResult == 1: recipePrice = dbtables.get_Taco()
-            if selectionResult == 2: recipePrice = dbtables.get_Spaghetti()
+            if selectionResult == 1: recipePrice = getPrices("taco")
+            if selectionResult == 2: recipePrice = getPrices("spaghetti")
     
     if mealSelection == 4: 
         print("\nThank you for using My Recipe Pal! Goodbye.")
         sleep(4)
         break
-    
-    print(recipePrice)
