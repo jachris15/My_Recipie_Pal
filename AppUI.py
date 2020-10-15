@@ -170,3 +170,4 @@ while True:
         print("\nThank you for using My Recipe Pal! Goodbye.")
         sleep(4)
         break
+    stop = input("^")
