@@ -1,3 +1,8 @@
+#Module Name: GEWebScrape
+#Imported by insert_data
+#used to scrape price data from Giant Eagle
+#Team Members: Bryce Benjamin, Cliff Rosenberg, Jordan Christan, Aarush Gupta
+
 import requests
 import sys
 import numpy as np 
@@ -9,15 +14,12 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
 
 #group the urls for the recipes on Giant Eagle
-
 tacoURLs = ("https://shop.gianteagle.com/waterworks/search/product/00000000040617",
 "https://shop.gianteagle.com/waterworks/search/product/00030034007737",
 "https://shop.gianteagle.com/waterworks/search/product/00201688000003",
 "https://shop.gianteagle.com/waterworks/search/product/00064144282432",
 "https://shop.gianteagle.com/waterworks/search/product/00046000811017",
 "https://shop.gianteagle.com/waterworks/search/product/00073420000110")
-
-
 
 spaghettiURLs = ("https://shop.gianteagle.com/waterworks/search/product/00030034045890",
 "https://shop.gianteagle.com/waterworks/search/product/00074908324414",
@@ -104,13 +106,3 @@ def getPrices(recipe):
 
     #return the set 
     return(set_of_item_prices)
-
-#store the sets as dictionaries for the corresponding food item
-
-#taco_dict = dict(getPrices("taco"))
-#tuna_dict = dict(getPrices("tuna"))
-#burger_dict = dict(getPrices("burger"))
-#pancake_dict = dict(getPrices("pancake"))
-#omelette_dict = dict(getPrices("omelette"))
-spaghetti_dict = dict(getPrices("spaghetti"))
-#print(tuna_dict)

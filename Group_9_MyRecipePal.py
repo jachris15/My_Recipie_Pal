@@ -1,12 +1,13 @@
-from os import system, name
-from time import sleep
-import numpy as np
+#Name: AppUI
+#Used as the main app control and user interface.
+#Team Members: Bryce Benjamin, Cliff Rosenberg, Jordan Christan, Aarush Gupta
+
+from os import system, name #this import is needed to get access to the clear screen function 
+from time import sleep 
 import pandas as pd
-#import db_tables as dbtables
-import re
 import sqlite3
 
-
+#clearScreen function used to reset screen after selection to prevent a wall of text as selections are made and data is displayed
 def clearScreen(): 
 
     if name == 'nt': 
@@ -35,6 +36,7 @@ def mainMenu():
             printWelcome()
             print("\nPlease select which meal type you want to cook:\n")
             
+            #this for loop displays the menu options. The i variable is used to create a newline space between the last item 
             i = 0
             for key, value in mealTypes.items(): 
                 
@@ -61,6 +63,7 @@ def mainMenu():
     
     return selection
 
+#function to display menu options and collect user selection
 def mealRecipes(mealType):
     
     while True:
@@ -90,7 +93,8 @@ def mealRecipes(mealType):
             print("\nSorry, your input of " + '\"' + recipeSelection + '\"' " was an invalid input. Please enter the corresponding number for the recipe you want.")
             sleep(5)
             continue
-
+        
+        #ensures that an appropriate selection is made
         if mealType == "breakfast" and recipeSelection >= 1 and recipeSelection <= 3: break
         elif mealType == "lunch" and recipeSelection >= 1 and recipeSelection <= 3: break
         elif mealType == "dinner" and recipeSelection >= 1 and recipeSelection <= 3: break
@@ -104,35 +108,45 @@ def mealRecipes(mealType):
     
     return recipeSelection
 
+#function of retrieve requested scraped data from database
 def getPrices (meal, ingredientList):
     
+    #sets up sqlite3 database connection
     conn = sqlite3.connect('stores.db')
     c = conn.cursor()
     
+    #creates empty dictionary for prices and store key/value pairs
     dictPrices = {}
     
     for store in stores:
         
+        #creates empty list to store individual item prices
         listPrices = []
         for row in c.execute('SELECT Product_Price FROM ' + meal + ' WHERE Store=?', (store,)):
             
+            #if the price in the DB is less than a dollar, format the price in dollar format and convert to float
             if (len(row[0])) == 3: listPrices.append(float("0." + row[0][:2]))
-            
+            #remove dollar sign and convert to float
             else: listPrices.append(float(row[0].split('$')[1]))        
         
+        #sum prices in the list
         total = sum(listPrices)
         
+        #ensures proper dollar format for display and adds the dollar sign back in after conducting mathematical operations
         if len(str(total).split(".")[1]) > 2: dictPrices[store] = "${:.2f}".format(total)
         else: dictPrices[store] = "$" + str(total)
     
+    #displays list of ingredients for selected recipe
     print("\n Ingredients list:\n")
     for ingredient in ingredientList:
         print("\t- " + ingredient)
     print("\n")
     
+    #converts dictionary of prices to dataframe for better display of data
     dataframePrices = pd.DataFrame(dictPrices, index = ["Price For Meal"])
     print(dataframePrices)
-        
+
+#function to prompt user if they want to continue to select recipes        
 def userContinue():
     
     while True:
@@ -159,6 +173,7 @@ breakfastRecipes = {1:"Pancakes and Eggs", 2:"Omelette", 3:"Back to main menu"}
 lunchRecipes = {1:"Burger and Fries", 2:"Tuna Sandwich", 3:"Back to main menu"}
 dinnerRecipes = {1:"Tacos", 2:"Spaghetti and Meatballs", 3:"Back to main menu"}
 
+#main loop for controlling the program
 while True: 
     
     mealSelection = mainMenu()

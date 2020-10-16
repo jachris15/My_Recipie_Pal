@@ -1,3 +1,8 @@
+#Module Name: TargetScrape
+#Imported by insert_data
+#used to scrape price data from target.
+#Team Members: Bryce Benjamin, Cliff Rosenberg, Jordan Christan, Aarush Gupta
+
 import requests
 import sys
 import numpy as np 

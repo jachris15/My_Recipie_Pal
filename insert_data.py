@@ -1,7 +1,10 @@
+#Module name: insert_data
+#used to insert the scraped data from the web scraping modules into the database.
+
 import sqlite3
-#import TargetScrape as target 
+import TargetScrape as target 
 import GEWebScrape as ge
-#import WalMartWebScrape as walmart
+import WalMartWebScrape as walmart
 
 conn = sqlite3.connect('stores.db')
 c = conn.cursor()
@@ -24,7 +27,6 @@ c.execute('''CREATE TABLE IF NOT EXISTS omelette
 c.execute('''CREATE TABLE IF NOT EXISTS spaghetti
            (Product_Name, Product_Price, Store)''')
          
-
 # Inserts Target data into DB
 '''          
 for key,value in target.taco_dict.items():
